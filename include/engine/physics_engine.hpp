@@ -1,5 +1,5 @@
 #pragma once
-#include "particle.hpp"
+#include "entities/particle.hpp"
 
 namespace engine {
   class PhysicsEngine{
@@ -19,6 +19,8 @@ namespace engine {
 
       void applyGravity(entities::Particle& particle);
       void updatePosition(entities::Particle& particle);
+      void applyConstraint(entities::Particle& particle);
+      
     private:
       uint32_t steps = 1;
       float time = 0.0f;

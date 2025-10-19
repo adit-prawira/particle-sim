@@ -1,4 +1,4 @@
-#include "particle.hpp"
+#include "entities/particle.hpp"
 
 namespace entities {
   // Public

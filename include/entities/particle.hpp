@@ -2,7 +2,7 @@
 #include <vector>
 #include <sstream>
 #include <SFML/Graphics.hpp>
-#include "logger.hpp"
+#include "logger/logger.hpp"
 
 namespace entities {
   class Particle {

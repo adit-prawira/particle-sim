@@ -8,10 +8,17 @@ namespace particle_sim {
   void App::run(){
     this->window.setFramerateLimit(constants::FRAME_LIMIT);
     std::cout << "STARTING: Initiating particle simulation..."<<std::endl;
+
+    sf::CircleShape container;
+    container.setRadius(400.0f);
+    container.setFillColor(sf::Color::Black);
+    container.setOrigin(sf::Vector2f{400.0f, 400.0f});
+    container.setPosition({this->window.getSize().x/2.0f, this->window.getSize().y/2.0f});
+
     entities::Particle particle;
     particle
       .setRadius(10)
-      .setPosition(100.0f,100.0f)
+      .setPosition(this->window.getSize().x/2.0f, this->window.getSize().y/2.0f)
       .setColor(sf::Color::White)
       .build();
 
@@ -28,7 +35,11 @@ namespace particle_sim {
           this->window.close();
         }
       }
-      this->window.clear(sf::Color::Black);
+      this->window.clear(sf::Color{
+        61, 69, 63
+      });
+  
+      this->window.draw(container);
       this->draw(particle);
 
       physics_engine.applyGravity(particle);

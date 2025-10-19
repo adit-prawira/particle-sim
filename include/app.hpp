@@ -1,7 +1,7 @@
 #pragma once
-#include "constant.hpp"
-#include "particle.hpp"
-#include "physics_engine.hpp"
+#include "constants/constant.hpp"
+#include "entities/particle.hpp"
+#include "engine/physics_engine.hpp"
 #include <SFML/Graphics.hpp>
 
 // std
