@@ -1,5 +1,6 @@
 #pragma once
 #include "entities/particle.hpp"
+#include "container/circular_container.hpp"
 
 namespace engine {
   class PhysicsEngine{
@@ -19,13 +20,12 @@ namespace engine {
 
       void applyGravity(entities::Particle& particle);
       void updatePosition(entities::Particle& particle);
-      void applyConstraint(entities::Particle& particle);
+      void applyConstraint(container::CircularContainer circularContainer, entities::Particle& particle);
       
     private:
       uint32_t steps = 1;
       float time = 0.0f;
       float frame_rate = 0.0f;
       float delta_time = 0.0f;
-
   };
 }

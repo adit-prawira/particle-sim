@@ -1,6 +1,7 @@
 #pragma once
 #include "constants/constant.hpp"
 #include "entities/particle.hpp"
+#include "container/circular_container.hpp"
 #include "engine/physics_engine.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -19,5 +20,7 @@ namespace particle_sim {
       sf::Font font;
 
       void draw(entities::Particle particle);
+      void draw(container::CircularContainer container);
+      sf::Vector2f windowCenter();
   };
 }

@@ -24,4 +24,14 @@ namespace engine{
   void PhysicsEngine::updatePosition(entities::Particle& particle){
     particle.updatePosition(this->getDeltaTime());
   }
+
+  void PhysicsEngine::applyConstraint(container::CircularContainer container, entities::Particle& particle){
+    const sf::Vector2f diff = particle.getPosition() - container.getPosition();
+    const float distance = std::sqrt(diff.x*diff.x + diff.y*diff.y);
+    if(distance > container.getRadius() - particle.getRadius()){
+      const sf::Vector2f normalized = diff/distance;
+      const sf::Vector2f newPosition = container.getPosition() + normalized * (container.getRadius() - particle.getRadius());
+      particle.setPosition(newPosition.x, newPosition.y);
+    }
+  }
 }

@@ -9,16 +9,16 @@ namespace particle_sim {
     this->window.setFramerateLimit(constants::FRAME_LIMIT);
     std::cout << "STARTING: Initiating particle simulation..."<<std::endl;
 
-    sf::CircleShape container;
-    container.setRadius(400.0f);
-    container.setFillColor(sf::Color::Black);
-    container.setOrigin(sf::Vector2f{400.0f, 400.0f});
-    container.setPosition({this->window.getSize().x/2.0f, this->window.getSize().y/2.0f});
+    container::CircularContainer container;
+    container.setRadius(450.0f)
+      .setPosition(this->windowCenter().x, this->windowCenter().y)
+      .setColor(sf::Color::Black)
+      .build();
 
     entities::Particle particle;
     particle
-      .setRadius(10)
-      .setPosition(this->window.getSize().x/2.0f, this->window.getSize().y/2.0f)
+      .setRadius(40.0f)
+      .setInitialPosition(this->windowCenter().x+300, this->windowCenter().y)
       .setColor(sf::Color::White)
       .build();
 
@@ -39,11 +39,13 @@ namespace particle_sim {
         61, 69, 63
       });
   
-      this->window.draw(container);
+      this->draw(container);
       this->draw(particle);
 
       physics_engine.applyGravity(particle);
       physics_engine.updatePosition(particle);
+      physics_engine.applyConstraint(container, particle);
+
   
       this->window.display();
     }
@@ -53,8 +55,20 @@ namespace particle_sim {
   void App::draw(entities::Particle particle){
       sf::CircleShape circle;
       circle.setRadius(particle.getRadius());
+      circle.setOrigin(particle.getOrigin());
       circle.setPosition(sf::Vector2f{particle.getPosition().x, particle.getPosition().y});
       circle.setFillColor(sf::Color::White);
       this->window.draw(circle);
   }
+
+  void App::draw(container::CircularContainer container){
+      sf::CircleShape circle;
+      circle.setRadius(container.getRadius());
+      circle.setOrigin(container.getOrigin());
+      circle.setPosition(sf::Vector2f{container.getPosition().x, container.getPosition().y});
+      circle.setFillColor(container.getColor());
+      this->window.draw(circle);
+  }
+
+  auto App::windowCenter()-> sf::Vector2f{return {this->window.getSize().x/2.0f, this->window.getSize().y/2.0f};}
 }

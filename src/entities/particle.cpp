@@ -10,9 +10,14 @@ namespace entities {
     this->color = color;
     return *this;
   }
-  Particle& Particle::setPosition(float x_position, float y_position){
+  Particle& Particle::setInitialPosition(float x_position, float y_position){
     this->position = sf::Vector2f{x_position, y_position};
     this->previous_position = this->position;
+    return *this;
+  }
+
+  Particle& Particle::setPosition(float x_position, float y_position){
+    this->position = sf::Vector2f{x_position, y_position};
     return *this;
   }
 
@@ -24,6 +29,7 @@ namespace entities {
   }
 
   auto Particle::getRadius() -> float{return radius;}
+  auto Particle::getOrigin() -> sf::Vector2f{return {radius, radius};}
   auto Particle::getColor() -> sf::Color {return color;}
   auto Particle::getPosition() -> sf::Vector2f{return position;}
 
