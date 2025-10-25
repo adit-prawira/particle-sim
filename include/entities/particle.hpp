@@ -7,10 +7,12 @@
 namespace entities {
   class Particle {
     public:
+
       Particle& setColor(sf::Color color);
       Particle& setInitialPosition(float x_position, float y_position);
       Particle& setPosition(float x_position, float y_position);
       Particle& setRadius(float radius);
+      Particle& showLogging(bool show_logging);
       Particle& build();
 
       float getRadius();

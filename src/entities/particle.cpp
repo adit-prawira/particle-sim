@@ -21,6 +21,11 @@ namespace entities {
     return *this;
   }
 
+  Particle& Particle::showLogging(bool show_logging){
+    this->logger.showLogging(show_logging);
+    return *this;
+  }
+
   Particle& Particle::build(){
     std::vector<std::string> validation_messages;
     if(!this->radius) validation_messages.push_back("Radius of particle is required!");
@@ -35,17 +40,18 @@ namespace entities {
 
   void Particle::updatePosition(float delta_time){
     const sf::Vector2f velocity = this->position - this->previous_position;
+    
     this->logger.log(logger::Info, "Particle::updatePosition", "velocity", velocity);
-    this->logger.log(logger::Info, "Particle::updatePosition", "acceleration", this->acceleration);
-
+    this->logger.log(logger::Info, "Particle::updatePosition", "acceleration", this->acceleration);    
     this->previous_position = this->position;
+
     this->logger.log(logger::Info, "Particle::updatePosition", "Previous particle position", this->previous_position);
-
     this->position = this->position + velocity + this->acceleration * (delta_time * delta_time);
-    this->logger.log(logger::Info, "Particle::updatePosition", "Current particle position", this->position);
 
+    this->logger.log(logger::Info, "Particle::updatePosition", "Current particle position", this->position);
+      
     this->acceleration = {};
-    this->logger.log(logger::Info, "Particle::updatePosition", "Acceleration is resetted");
+    this->logger.log(logger::Info, "Particle::updatePosition", "Acceleration is resetted");  
   }
 
   void Particle::accelerate(float x_acceleration, float y_acceleration){

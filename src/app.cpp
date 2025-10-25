@@ -8,24 +8,19 @@ namespace particle_sim {
   void App::run(){
     this->window.setFramerateLimit(constants::FRAME_LIMIT);
     std::cout << "STARTING: Initiating particle simulation..."<<std::endl;
-
+    sf::Clock clock;
     container::CircularContainer container;
+    std::vector<entities::Particle> particles;
+    engine::PhysicsEngine physics_engine;
+
     container.setRadius(450.0f)
       .setPosition(this->windowCenter().x, this->windowCenter().y)
       .setColor(sf::Color::Black)
       .build();
-
-    entities::Particle particle;
-    particle
-      .setRadius(40.0f)
-      .setInitialPosition(this->windowCenter().x+300, this->windowCenter().y)
-      .setColor(sf::Color::White)
-      .build();
-
-    engine::PhysicsEngine physics_engine;
     physics_engine
       .setFrameRate(constants::FRAME_LIMIT)
       .setSteps(1)
+      .showLogging(true)
       .build();
 
     while(this->window.isOpen()){
@@ -35,18 +30,28 @@ namespace particle_sim {
           this->window.close();
         }
       }
-      this->window.clear(sf::Color{
-        61, 69, 63
-      });
-  
+      this->window.clear(sf::Color{61, 69, 63});
       this->draw(container);
-      this->draw(particle);
 
-      physics_engine.applyGravity(particle);
-      physics_engine.updatePosition(particle);
-      physics_engine.applyConstraint(container, particle);
+      if(particles.size() < 10 && clock.getElapsedTime().asSeconds() >= 1.0f){
+        clock.restart();
+        particles.push_back(
+          entities::Particle()
+            .setRadius(40.0f)
+            .setInitialPosition(this->windowCenter().x+300, this->windowCenter().y)
+            .setColor(sf::Color::White)
+            .showLogging(false)
+            .build()
+        );
+      }
 
-  
+      for(auto &particle:particles)        
+        this->draw(particle);
+        
+      physics_engine.applyGravity(particles);
+      physics_engine.applyCollision(particles);
+      physics_engine.applyConstraint(container, particles);
+      physics_engine.updatePosition(particles);
       this->window.display();
     }
   }

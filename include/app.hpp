@@ -4,6 +4,7 @@
 #include "container/circular_container.hpp"
 #include "engine/physics_engine.hpp"
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 // std
 #include <string>

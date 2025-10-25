@@ -1,4 +1,5 @@
 #pragma once
+#include "logger/logger.hpp"
 #include "entities/particle.hpp"
 #include "container/circular_container.hpp"
 
@@ -11,6 +12,8 @@ namespace engine {
     public:
       PhysicsEngine& setFrameRate(float frame_rate);
       PhysicsEngine& setSteps(uint32_t steps);
+      PhysicsEngine& setCollisionResponseCoefficient(float response_coefficient);
+      PhysicsEngine& showLogging(bool show_logging);
       PhysicsEngine& build();
 
       float getDeltaTime();
@@ -18,14 +21,17 @@ namespace engine {
       float getFrameRate();
       float getUpdateRate();
 
-      void applyGravity(entities::Particle& particle);
-      void updatePosition(entities::Particle& particle);
-      void applyConstraint(container::CircularContainer circularContainer, entities::Particle& particle);
-      
+      void applyGravity(std::vector<entities::Particle> &particles);
+      void updatePosition(std::vector<entities::Particle> &particles);
+      void applyConstraint(container::CircularContainer circularContainer, std::vector<entities::Particle> &particles);
+      void applyCollision(std::vector<entities::Particle> &particles);
     private:
       uint32_t steps = 1;
       float time = 0.0f;
       float frame_rate = 0.0f;
       float delta_time = 0.0f;
+      float response_coefficient = 0.75f;
+      logger::Logger logger;
+
   };
 }
