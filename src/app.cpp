@@ -10,9 +10,16 @@ namespace particle_sim {
     std::cout << "STARTING: Initiating particle simulation..."<<std::endl;
     sf::Clock clock;
     container::CircularContainer container;
-    std::vector<entities::Particle> particles;
     engine::PhysicsEngine physics_engine;
+    generators::ParticleGenerator particle_generator;
 
+    particle_generator
+      .setInitialPosition(this->windowCenter().x-350, this->windowCenter().y-280)
+      .setMaxSize(30.0f)
+      .setMinSize(10.0f)
+      .setSpawnDelay(0.025f)
+      .setTotalNumber(500);
+  
     container.setRadius(450.0f)
       .setPosition(this->windowCenter().x, this->windowCenter().y)
       .setColor(sf::Color::Black)
@@ -30,28 +37,20 @@ namespace particle_sim {
           this->window.close();
         }
       }
-      this->window.clear(sf::Color{61, 69, 63});
+      
+      this->window.clear(sf::Color{33, 34, 43});
       this->draw(container);
 
-      if(particles.size() < 10 && clock.getElapsedTime().asSeconds() >= 1.0f){
-        clock.restart();
-        particles.push_back(
-          entities::Particle()
-            .setRadius(40.0f)
-            .setInitialPosition(this->windowCenter().x+300, this->windowCenter().y)
-            .setColor(sf::Color::White)
-            .showLogging(false)
-            .build()
-        );
-      }
-
-      for(auto &particle:particles)        
+      particle_generator.generateAsync(physics_engine.getTime(), physics_engine.getStepDeltaTime());
+      
+      for(auto &particle:particle_generator.getParticles())        
         this->draw(particle);
-        
-      physics_engine.applyGravity(particles);
-      physics_engine.applyCollision(particles);
-      physics_engine.applyConstraint(container, particles);
-      physics_engine.updatePosition(particles);
+      
+      physics_engine.updateTime();
+      physics_engine.applyGravity(particle_generator.getParticles());
+      physics_engine.applyCollision(particle_generator.getParticles());
+      physics_engine.applyConstraint(container, particle_generator.getParticles());
+      physics_engine.updatePosition(particle_generator.getParticles());
       this->window.display();
     }
   }
@@ -62,7 +61,7 @@ namespace particle_sim {
       circle.setRadius(particle.getRadius());
       circle.setOrigin(particle.getOrigin());
       circle.setPosition(sf::Vector2f{particle.getPosition().x, particle.getPosition().y});
-      circle.setFillColor(sf::Color::White);
+      circle.setFillColor(particle.getColor());
       this->window.draw(circle);
   }
 

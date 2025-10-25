@@ -21,6 +21,11 @@ namespace entities {
     return *this;
   }
 
+  Particle& Particle::setInitialVelocity(sf::Vector2f velocity, float time){
+    this->previous_position = this->position - (velocity * time);
+    return *this;
+  }
+
   Particle& Particle::showLogging(bool show_logging){
     this->logger.showLogging(show_logging);
     return *this;

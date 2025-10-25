@@ -20,7 +20,8 @@ namespace engine {
       float getTime();
       float getFrameRate();
       float getUpdateRate();
-
+      float getStepDeltaTime();
+      void updateTime();
       void applyGravity(std::vector<entities::Particle> &particles);
       void updatePosition(std::vector<entities::Particle> &particles);
       void applyConstraint(container::CircularContainer circularContainer, std::vector<entities::Particle> &particles);

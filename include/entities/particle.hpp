@@ -7,8 +7,8 @@
 namespace entities {
   class Particle {
     public:
-
       Particle& setColor(sf::Color color);
+      Particle& setInitialVelocity(sf::Vector2f velocity, float time);
       Particle& setInitialPosition(float x_position, float y_position);
       Particle& setPosition(float x_position, float y_position);
       Particle& setRadius(float radius);

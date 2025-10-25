@@ -3,6 +3,7 @@
 #include "entities/particle.hpp"
 #include "container/circular_container.hpp"
 #include "engine/physics_engine.hpp"
+#include "generators/particle_generator.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 

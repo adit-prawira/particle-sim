@@ -21,7 +21,10 @@ namespace engine{
   auto PhysicsEngine::getDeltaTime() -> float{return getUpdateRate()/static_cast<float>(steps);}
   auto PhysicsEngine::getTime() -> float{return time;}
   auto PhysicsEngine::getUpdateRate() -> float{return 1.0/static_cast<float>(this->frame_rate);}
-  
+  auto PhysicsEngine::getStepDeltaTime() -> float {return this->frame_rate/static_cast<float>(steps);}
+  void PhysicsEngine::updateTime(){
+    this->time += this->frame_rate;
+  }
   void PhysicsEngine::applyGravity(std::vector<entities::Particle> &particles){
     for(auto &particle : particles)
       particle.accelerate(0.0f, GRAVITY);
