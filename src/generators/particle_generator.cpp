@@ -37,7 +37,6 @@ namespace generators{
       clock.restart();
       const float angle = this->max_angle * sin(step_delta_time) * M_PI *0.5f;
 
-      std::cout << "RADIUS -> " << this->generateRadius() << std::endl;
       particles.push_back(
         entities::Particle()
           .setRadius(this->generateRadius())

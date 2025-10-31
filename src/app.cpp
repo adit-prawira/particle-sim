@@ -13,12 +13,13 @@ namespace particle_sim {
     engine::PhysicsEngine physics_engine;
     generators::ParticleGenerator particle_generator;
 
+    bool use_logging = false;
     particle_generator
       .setInitialPosition(this->windowCenter().x-350, this->windowCenter().y-280)
-      .setMaxSize(30.0f)
-      .setMinSize(10.0f)
-      .setSpawnDelay(0.025f)
-      .setTotalNumber(500);
+      .setMaxSize(20.0f)
+      .setMinSize(5.0f)
+      .setSpawnDelay(0.015f)
+      .setTotalNumber(1000);
   
     container.setRadius(450.0f)
       .setPosition(this->windowCenter().x, this->windowCenter().y)
@@ -27,7 +28,7 @@ namespace particle_sim {
     physics_engine
       .setFrameRate(constants::FRAME_LIMIT)
       .setSteps(1)
-      .showLogging(true)
+      .showLogging(use_logging)
       .build();
 
     while(this->window.isOpen()){
